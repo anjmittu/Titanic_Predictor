@@ -66,6 +66,21 @@ for i in range(0, 2):
 train['Age'] = train['Age'].astype(int)
 test['Age'] = test['Age'].astype(int)
 
+# Convert Age into ranges
+train['AgeRange'] = train['Age']
+train.loc[ train['AgeRange'] <= 21, 'AgeRange'] = 0
+train.loc[(train['AgeRange'] > 21) & (train['AgeRange'] <= 26), 'AgeRange'] = 1
+train.loc[(train['AgeRange'] > 26) & (train['AgeRange'] <= 36), 'AgeRange'] = 2
+train.loc[(train['AgeRange'] > 36), 'AgeRange'] = 3
+
+test['AgeRange'] = test['Age']
+test.loc[ train['AgeRange'] <= 21, 'AgeRange'] = 0
+test.loc[(train['AgeRange'] > 21) & (test['AgeRange'] <= 26), 'AgeRange'] = 1
+test.loc[(train['AgeRange'] > 26) & (test['AgeRange'] <= 36), 'AgeRange'] = 2
+test.loc[(train['AgeRange'] > 36), 'AgeRange'] = 3
+
+
+
 # Embarked could be useful
 train[['Embarked', 'Survived']].groupby(['Embarked'], as_index=False).mean().sort_values(by='Survived', ascending=False)
 
@@ -88,7 +103,7 @@ combine = [train, test]
 
 # Starting with a simple log regresssion
 logreg = LogisticRegression()
-logreg.fit(X_train[["Pclass", "Sex", "Age"]], Y_train)
-Y_pred = logreg.predict(X_test[["Pclass", "Sex", "Age"]])
-acc_log = round(logreg.score(X_train[["Pclass", "Sex", "Age"]], Y_train) * 100, 2)
+logreg.fit(X_train[["Pclass", "Sex", "AgeRange"]], Y_train)
+Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange"]])
+acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange"]], Y_train) * 100, 2)
 acc_log
