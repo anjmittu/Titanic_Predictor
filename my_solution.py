@@ -103,13 +103,12 @@ train['Embarked'] = train['Embarked'].map( {'NA': -1, 'C': 0, 'Q': 1, 'S': 2} ).
 test['Embarked'] = test['Embarked'].fillna("NA")
 test['Embarked'] = test['Embarked'].map( {'NA': -1, 'C': 0, 'Q': 1, 'S': 2} ).astype(int)
 
+# Find number of family members on board
+train['FamilyMems'] = train['Parch'] + train['SibSp']
+test['FamilyMems'] = test['Parch'] + test['SibSp']
 
 # Embarked could be useful
-train[['Embarked', 'Survived']].groupby(['Embarked'], as_index=False).mean().sort_values(by='Survived', ascending=False)
-
-# Cabin letter could be useful
-train[['CabinLetter', 'Survived']].groupby(['CabinLetter'], as_index=False).mean().sort_values(by='Survived', ascending=False)
-
+train[['FamilyMems', 'Survived']].groupby(['FamilyMems'], as_index=False).mean().sort_values(by='Survived', ascending=False)
 
 
 grid = sns.FacetGrid(train, col='Survived', row='CabinLetter', size=2.2, aspect=1.6)
@@ -126,12 +125,12 @@ ids = test['PassengerId']
 
 # Starting with a simple log regresssion
 logreg = LogisticRegression()
-logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']], Y_train)
-Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']])
-acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']], Y_train) * 100, 2)
+logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']], Y_train)
+Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']])
+acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']], Y_train) * 100, 2)
 acc_log
 
-coeff_df = pd.DataFrame(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']].columns)
+coeff_df = pd.DataFrame(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']].columns)
 coeff_df.columns = ['Feature']
 coeff_df["Correlation"] = pd.Series(logreg.coef_[0])
 
