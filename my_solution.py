@@ -68,16 +68,18 @@ test['Age'] = test['Age'].astype(int)
 
 # Convert Age into ranges
 train['AgeRange'] = train['Age']
-train.loc[ train['AgeRange'] <= 21, 'AgeRange'] = 0
-train.loc[(train['AgeRange'] > 21) & (train['AgeRange'] <= 26), 'AgeRange'] = 1
-train.loc[(train['AgeRange'] > 26) & (train['AgeRange'] <= 36), 'AgeRange'] = 2
-train.loc[(train['AgeRange'] > 36), 'AgeRange'] = 3
+train.loc[ train['AgeRange'] <= 6, 'AgeRange'] = 0
+train.loc[(train['AgeRange'] > 6) & (train['AgeRange'] <= 21), 'AgeRange'] = 1
+train.loc[(train['AgeRange'] > 21) & (train['AgeRange'] <= 26), 'AgeRange'] = 2
+train.loc[(train['AgeRange'] > 26) & (train['AgeRange'] <= 36), 'AgeRange'] = 3
+train.loc[(train['AgeRange'] > 36), 'AgeRange'] = 4
 
 test['AgeRange'] = test['Age']
-test.loc[ train['AgeRange'] <= 21, 'AgeRange'] = 0
-test.loc[(train['AgeRange'] > 21) & (test['AgeRange'] <= 26), 'AgeRange'] = 1
-test.loc[(train['AgeRange'] > 26) & (test['AgeRange'] <= 36), 'AgeRange'] = 2
-test.loc[(train['AgeRange'] > 36), 'AgeRange'] = 3
+test.loc[ test['AgeRange'] <= 6, 'AgeRange'] = 0
+test.loc[(test['AgeRange'] > 6) & (test['AgeRange'] <= 21), 'AgeRange'] = 1
+test.loc[(test['AgeRange'] > 21) & (test['AgeRange'] <= 26), 'AgeRange'] = 2
+test.loc[(test['AgeRange'] > 26) & (test['AgeRange'] <= 36), 'AgeRange'] = 3
+test.loc[(test['AgeRange'] > 36), 'AgeRange'] = 4
 
 
 
