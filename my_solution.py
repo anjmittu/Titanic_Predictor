@@ -47,10 +47,6 @@ for i in range(0, 2):
         guess_df = train[(train['Sex'] == i) & (train['Pclass'] == j+1)]['Age'].dropna()
         guess_df2 = test[(test['Sex'] == i) & (test['Pclass'] == j+1)]['Age'].dropna()
 
-        # age_mean = guess_df.mean()
-        # age_std = guess_df.std()
-        # age_guess = rnd.uniform(age_mean - age_std, age_mean + age_std)
-
         age_guess = guess_df.median()
         age_guess_test = guess_df2.median()
 
@@ -81,6 +77,25 @@ test.loc[(test['AgeRange'] > 21) & (test['AgeRange'] <= 26), 'AgeRange'] = 2
 test.loc[(test['AgeRange'] > 26) & (test['AgeRange'] <= 36), 'AgeRange'] = 3
 test.loc[(test['AgeRange'] > 36), 'AgeRange'] = 4
 
+# Get titles from name
+train['Title'] = train.Name.str.extract(' ([A-Za-z]+)\.', expand=False)
+train['Title'] = train['Title'].replace(['Lady', 'Countess','Capt', 'Col',\
+	'Don', 'Dr', 'Major', 'Rev', 'Sir', 'Jonkheer', 'Dona'], 'Rare')
+train['Title'] = train['Title'].replace('Mlle', 'Miss')
+train['Title'] = train['Title'].replace('Ms', 'Miss')
+train['Title'] = train['Title'].replace('Mme', 'Mrs')
+test['Title'] = test.Name.str.extract(' ([A-Za-z]+)\.', expand=False)
+test['Title'] = test['Title'].replace(['Lady', 'Countess','Capt', 'Col',\
+	'Don', 'Dr', 'Major', 'Rev', 'Sir', 'Jonkheer', 'Dona'], 'Rare')
+test['Title'] = test['Title'].replace('Mlle', 'Miss')
+test['Title'] = test['Title'].replace('Ms', 'Miss')
+test['Title'] = test['Title'].replace('Mme', 'Miss')
+
+# Convert titles to numbers
+train['Title'] = train['Title'].fillna("Unk")
+train['Title'] = train['Title'].map( {'Unk': -1, 'Rare': 0, 'Miss': 1, 'Master': 2, 'Mr': 3, 'Mrs': 4} ).astype(int)
+test['Title'] = test['Title'].fillna("Unk")
+test['Title'] = test['Title'].map( {'Unk': -1, 'Rare': 0, 'Miss': 1, 'Master': 2, 'Mr': 3, 'Mrs': 4} ).astype(int)
 
 
 # Embarked could be useful
@@ -102,13 +117,12 @@ X_train = train.drop("Survived", axis=1)
 Y_train = train["Survived"]
 X_test  = test.drop("PassengerId", axis=1).copy()
 ids = test['PassengerId']
-combine = [train, test]
 
 # Starting with a simple log regresssion
 logreg = LogisticRegression()
-logreg.fit(X_train[["Pclass", "Sex", "AgeRange"]], Y_train)
-Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange"]])
-acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange"]], Y_train) * 100, 2)
+logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title"]], Y_train)
+Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title"]])
+acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title"]], Y_train) * 100, 2)
 acc_log
 
 
