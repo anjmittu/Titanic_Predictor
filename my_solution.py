@@ -99,6 +99,7 @@ train.head()
 X_train = train.drop("Survived", axis=1)
 Y_train = train["Survived"]
 X_test  = test.drop("PassengerId", axis=1).copy()
+ids = test['PassengerId']
 combine = [train, test]
 
 # Starting with a simple log regresssion
@@ -107,3 +108,8 @@ logreg.fit(X_train[["Pclass", "Sex", "AgeRange"]], Y_train)
 Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange"]])
 acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange"]], Y_train) * 100, 2)
 acc_log
+
+
+output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
+output.to_csv('titanic-predictions.csv', index = False)
+output.head()
