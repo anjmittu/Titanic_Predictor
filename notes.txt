@@ -4,3 +4,6 @@ Logistic Regression
 "Pclass", "Sex", "Age" -> 79.909999999999997
 "Pclass", "Sex", "AgeRange" -> 79.909999999999997 (train)  0.75598 (test)
 "Pclass", "Sex", "AgeRange", "Title" -> 80.129999999999995 (train) 0.76555 (test)
+"Pclass", "Sex", "AgeRange", "Title", 'CabinLetter' -> 80.920000000000002 (train) 0.75598 (test)
+"Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked' -> 80.129999999999995 (train) 0.76076 (test)
+"Pclass", "Sex", "AgeRange", "Title", 'Embarked' -> 80.019999999999996 (train)

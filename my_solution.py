@@ -30,10 +30,10 @@ test['Sex'] = test['Sex'].map( {'female': 1, 'male': 0} ).astype(int)
 # Get Cabin letter from Cabin and convert to number
 train['CabinLetter'] = train.Cabin.str.extract('([A-Za-z])', expand=False)
 train['CabinLetter'] = train['CabinLetter'].fillna("NA")
-train['CabinLetter'] = train['CabinLetter'].map( {'NA': 0, 'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'T': 8} ).astype(int)
+train['CabinLetter'] = train['CabinLetter'].map( {'D': 1, 'E': 2, 'B': 3, 'F': 4, 'C': 5, 'G': 6, 'A': 7, 'NA': 8, 'T': 9} ).astype(int)
 test['CabinLetter'] = test.Cabin.str.extract('([A-Za-z])', expand=False)
 test['CabinLetter'] = test['CabinLetter'].fillna("NA")
-test['CabinLetter'] = test['CabinLetter'].map( {'NA': 0, 'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'T': 8} ).astype(int)
+test['CabinLetter'] = test['CabinLetter'].map( {'D': 1, 'E': 2, 'B': 3, 'F': 4, 'C': 5, 'G': 6, 'A': 7, 'NA': 8, 'T': 9} ).astype(int)
 
 # Clean up NAs from fare
 train['Fare'].fillna(train['Fare'].dropna().median(), inplace=True)
@@ -97,6 +97,12 @@ train['Title'] = train['Title'].map( {'Unk': -1, 'Rare': 0, 'Miss': 1, 'Master':
 test['Title'] = test['Title'].fillna("Unk")
 test['Title'] = test['Title'].map( {'Unk': -1, 'Rare': 0, 'Miss': 1, 'Master': 2, 'Mr': 3, 'Mrs': 4} ).astype(int)
 
+# Convert Embarked to numbers
+train['Embarked'] = train['Embarked'].fillna("NA")
+train['Embarked'] = train['Embarked'].map( {'NA': -1, 'C': 0, 'Q': 1, 'S': 2} ).astype(int)
+test['Embarked'] = test['Embarked'].fillna("NA")
+test['Embarked'] = test['Embarked'].map( {'NA': -1, 'C': 0, 'Q': 1, 'S': 2} ).astype(int)
+
 
 # Embarked could be useful
 train[['Embarked', 'Survived']].groupby(['Embarked'], as_index=False).mean().sort_values(by='Survived', ascending=False)
@@ -106,7 +112,7 @@ train[['CabinLetter', 'Survived']].groupby(['CabinLetter'], as_index=False).mean
 
 
 
-grid = sns.FacetGrid(train, col='Survived', row='Pclass', size=2.2, aspect=1.6)
+grid = sns.FacetGrid(train, col='Survived', row='CabinLetter', size=2.2, aspect=1.6)
 grid.map(plt.hist, 'Fare', alpha=.5, bins=20)
 grid.add_legend();
 
@@ -120,12 +126,17 @@ ids = test['PassengerId']
 
 # Starting with a simple log regresssion
 logreg = LogisticRegression()
-logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title"]], Y_train)
-Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title"]])
-acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title"]], Y_train) * 100, 2)
+logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']], Y_train)
+Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']])
+acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']], Y_train) * 100, 2)
 acc_log
+
+coeff_df = pd.DataFrame(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked']].columns)
+coeff_df.columns = ['Feature']
+coeff_df["Correlation"] = pd.Series(logreg.coef_[0])
+
+coeff_df.sort_values(by='Correlation', ascending=False)
 
 
 output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
 output.to_csv('titanic-predictions.csv', index = False)
-output.head()
