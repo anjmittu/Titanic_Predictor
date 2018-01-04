@@ -12,3 +12,14 @@ Logistic Regression
 
 Random Forest
 "Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' -> 91.579999999999998 (train) 0.77990 (test)
+
+
+
+
+I've now split 20% of the data into a CV set
+
+Logistic Regression
+"Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' -> 82.159999999999997 (train)
+
+Random Forest
+"Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' -> 91.290000000000006 (train)

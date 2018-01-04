@@ -10,6 +10,7 @@ get_ipython().magic('matplotlib inline')
 
 # machine learning
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 from sklearn.svm import SVC, LinearSVC
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neighbors import KNeighborsClassifier
@@ -20,6 +21,9 @@ from sklearn.tree import DecisionTreeClassifier
 
 train = pd.read_csv('data/train.csv')
 test = pd.read_csv('data/test.csv')
+
+# Data Clean Up
+# --------------------------------------------------------------------------------------------------
 
 # Columns that do not seem important: PassengerID, Name, Ticket
 
@@ -131,8 +135,13 @@ grid.add_legend();
 
 train.head()
 
+# Learning Models
+# --------------------------------------------------------------------------------------------------
+
+num_test = 0.20
 X_train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
 Y_train = train["Survived"]
+X_train, X_CV, Y_train, y_CV = train_test_split(X_train, Y_train, test_size=num_test, random_state=23)
 X_test  = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
 ids = test['PassengerId']
 
