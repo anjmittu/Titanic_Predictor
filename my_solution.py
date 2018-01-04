@@ -107,6 +107,19 @@ test['Embarked'] = test['Embarked'].map( {'NA': -1, 'C': 0, 'Q': 1, 'S': 2} ).as
 train['FamilyMems'] = train['Parch'] + train['SibSp']
 test['FamilyMems'] = test['Parch'] + test['SibSp']
 
+# Get fare ranges
+train.loc[ train['Fare'] <= 7.91, 'Fare'] = 0
+train.loc[(train['Fare'] > 7.91) & (train['Fare'] <= 14.454), 'Fare'] = 1
+train.loc[(train['Fare'] > 14.454) & (train['Fare'] <= 31), 'Fare']   = 2
+train.loc[ train['Fare'] > 31, 'Fare'] = 3
+train['Fare'] = train['Fare'].astype(int)
+test.loc[ test['Fare'] <= 7.91, 'Fare'] = 0
+test.loc[(test['Fare'] > 7.91) & (test['Fare'] <= 14.454), 'Fare'] = 1
+test.loc[(test['Fare'] > 14.454) & (test['Fare'] <= 31), 'Fare']   = 2
+test.loc[ test['Fare'] > 31, 'Fare'] = 3
+test['Fare'] = test['Fare'].astype(int)
+
+
 # Embarked could be useful
 train[['FamilyMems', 'Survived']].groupby(['FamilyMems'], as_index=False).mean().sort_values(by='Survived', ascending=False)
 
@@ -125,16 +138,19 @@ ids = test['PassengerId']
 
 # Starting with a simple log regresssion
 logreg = LogisticRegression()
-logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']], Y_train)
-Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']])
-acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']], Y_train) * 100, 2)
+logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']], Y_train)
+Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']])
+acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']], Y_train) * 100, 2)
 acc_log
 
-coeff_df = pd.DataFrame(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems']].columns)
+coeff_df = pd.DataFrame(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']].columns)
 coeff_df.columns = ['Feature']
 coeff_df["Correlation"] = pd.Series(logreg.coef_[0])
 
 coeff_df.sort_values(by='Correlation', ascending=False)
+
+# Using Random Forest
+
 
 
 output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
