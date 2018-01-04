@@ -121,7 +121,7 @@ test['Fare'] = test['Fare'].astype(int)
 
 
 # Embarked could be useful
-train[['FamilyMems', 'Survived']].groupby(['FamilyMems'], as_index=False).mean().sort_values(by='Survived', ascending=False)
+train[['Fare', 'Survived']].groupby(['Fare'], as_index=False).mean().sort_values(by='Survived', ascending=False)
 
 
 grid = sns.FacetGrid(train, col='Survived', row='CabinLetter', size=2.2, aspect=1.6)
@@ -131,26 +131,30 @@ grid.add_legend();
 
 train.head()
 
-X_train = train.drop("Survived", axis=1)
+X_train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
 Y_train = train["Survived"]
-X_test  = test.drop("PassengerId", axis=1).copy()
+X_test  = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
 ids = test['PassengerId']
 
 # Starting with a simple log regresssion
 logreg = LogisticRegression()
-logreg.fit(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']], Y_train)
-Y_pred = logreg.predict(X_test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']])
-acc_log = round(logreg.score(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']], Y_train) * 100, 2)
+logreg.fit(X_train, Y_train)
+Y_pred = logreg.predict(X_test)
+acc_log = round(logreg.score(X_train, Y_train) * 100, 2)
 acc_log
 
-coeff_df = pd.DataFrame(X_train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']].columns)
+coeff_df = pd.DataFrame(X_train.columns)
 coeff_df.columns = ['Feature']
 coeff_df["Correlation"] = pd.Series(logreg.coef_[0])
 
 coeff_df.sort_values(by='Correlation', ascending=False)
 
 # Using Random Forest
-
+random_forest = RandomForestClassifier(n_estimators=100)
+random_forest.fit(X_train, Y_train)
+Y_pred = random_forest.predict(X_test)
+acc_random_forest = round(random_forest.score(X_train, Y_train) * 100, 2)
+acc_random_forest
 
 
 output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })

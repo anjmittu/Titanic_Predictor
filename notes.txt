@@ -9,3 +9,6 @@ Logistic Regression
 "Pclass", "Sex", "AgeRange", "Title", 'Embarked' -> 80.019999999999996 (train)
 "Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems' -> 81.030000000000001 (train) 0.77033 (test)
 "Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' -> 80.469999999999999 (train) 0.75598 (test)
+
+Random Forest
+"Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' -> 91.579999999999998 (train) 0.77990 (test)
