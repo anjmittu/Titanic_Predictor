@@ -35,14 +35,5 @@ coeff_df["Correlation"] = pd.Series(logreg.coef_[0])
 
 coeff_df.sort_values(by='Correlation', ascending=False)
 
-# Using Random Forest
-random_forest = RandomForestClassifier(n_estimators=10, criterion="entropy", max_features='log2', min_samples_leaf=1, min_samples_split=5)
-random_forest.fit(X_train, Y_train)
-Y_pred = random_forest.predict(X_test)
-acc_random_forest = round(random_forest.score(X_train, Y_train) * 100, 2)
-acc_random_forest
-acc_random_forest = round(random_forest.score(X_CV, Y_CV) * 100, 2)
-acc_random_forest
-
 output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
 output.to_csv('titanic-predictions.csv', index = False)

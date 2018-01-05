@@ -16,7 +16,7 @@ X_train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked'
 Y_train = train["Survived"]
 ids = test['PassengerId']
 
-random_forest = RandomForestClassifier(n_estimators=10, criterion="entropy", max_features='log2', min_samples_leaf=1, min_samples_split=5)
+random_forest = RandomForestClassifier(n_estimators=10, criterion="gini", max_depth=30, max_features='log2', min_samples_leaf=3, min_samples_split=3)
 
 
 kf = KFold(891, n_folds=10)

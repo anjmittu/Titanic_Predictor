@@ -23,8 +23,8 @@ clf = RandomForestClassifier()
 parameters = {'n_estimators': [10, 100, 1000],
               'max_features': ['log2', 'sqrt', 'auto'],
               'criterion': ['entropy', 'gini'],
-              'max_depth': [3, 10, 30],
-              'min_samples_split': [2, 3, 10, 30],
+              'max_depth': [3, 30, 100, 300, 1000],
+              'min_samples_split': [1, 3, 10, 30],
               'min_samples_leaf': [1, 3, 10, 30]
              }
 
@@ -45,7 +45,3 @@ clf = grid_obj.best_estimator_
 clf.fit(X_train, Y_train)
 acc_random_forest = round(clf.score(X_train, Y_train) * 100, 2)
 print(acc_random_forest)
-
-Y_pred = grid_obj.predict(X_test)
-output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
-output.to_csv('titanic-predictions.csv', index = False)
