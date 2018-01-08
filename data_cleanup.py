@@ -108,4 +108,8 @@ def get_data():
     test.loc[ test['Fare'] > 31, 'Fare'] = 3
     test['Fare'] = test['Fare'].astype(int)
 
-    return (train, test)
+    ids = test['PassengerId']
+    train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', "Survived"]]
+    test = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
+    
+    return (train, test, ids)
