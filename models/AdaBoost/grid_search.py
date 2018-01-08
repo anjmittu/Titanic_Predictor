@@ -1,9 +1,8 @@
 # data analysis and wrangling
-import pandas as pd
 import data_cleanup as dc
 
 # machine learning
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
 from sklearn.metrics import make_scorer, accuracy_score
 from sklearn.model_selection import GridSearchCV
 
@@ -16,15 +15,11 @@ X_test  = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked',
 ids = test['PassengerId']
 
 # Choose the type of classifier.
-clf = RandomForestClassifier()
+clf = AdaBoostClassifier()
 
 # Choose some parameter combinations to try
-parameters = {'n_estimators': [10, 100, 1000],
-              'max_features': ['log2', 'sqrt', 'auto'],
-              'criterion': ['entropy', 'gini'],
-              'max_depth': [3, 30, 100, 300, 1000],
-              'min_samples_split': [1, 3, 10, 30],
-              'min_samples_leaf': [1, 3, 10, 30]
+parameters = {'n_estimators': [10, 50, 100, 1000],
+              'learning_rate': [.001, .1, 1, 3, 10]
              }
 
 # Type of scoring used to compare parameter combinations

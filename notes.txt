@@ -16,15 +16,21 @@ Random Forest
 
 
 
-I've now split 20% of the data into a CV set
+I've now split 20% of the data into a dev set
 
 Logistic Regression
 "Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' -> 82.159999999999997 (train)
 
 Random Forest
 "Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' -> 91.290000000000006 (train)
-{'criterion': 'entropy', 'max_depth': None, 'max_features': 'log2', 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 10} -> 89.189999999999998 (train) 92.310000000000002 (CV) 0.77033 (test)
+{'criterion': 'entropy', 'max_depth': None, 'max_features': 'log2', 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 10} -> 89.189999999999998 (train) 92.310000000000002 (dev) 0.77033 (test)
 
-Started using K folds because this I think it should be a better estimate than just one CV Set
+Started using K folds because this I think it should be a better estimate than just one dev Set
+
 {'criterion': 'entropy', 'max_depth': None, 'max_features': 'log2', 'min_samples_leaf': 1, 'min_samples_split': 5, 'n_estimators': 10} -> 83.73283395755307 (KFolds) 0.77033 (test)
 {'criterion': 'gini', 'max_depth': 30, 'max_features': 'log2', 'min_samples_leaf': 3, 'min_samples_split': 3, 'n_estimators': 10} -> 82.83520599250936 (KFolds) 0.75598 (test)
+
+
+AdaBoost
+Standard features No hyper changes -> 83.150000000000006 (train) 81.010000000000005 (dev) 81.48439450686642 (KFolds) 0.74162 (test)
+{n_estimators=10} -> 83.290000000000006 (train) 82.519999999999996 (test) 81.93133583021224 (KFolds) 0.75119 (test)

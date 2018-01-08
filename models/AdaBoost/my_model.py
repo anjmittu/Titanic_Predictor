@@ -4,7 +4,7 @@ import data_cleanup as dc
 
 # machine learning
 from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
+from sklearn.ensemble import AdaBoostClassifier
 
 (train, test) = dc.get_data()
 
@@ -16,12 +16,12 @@ X_test  = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked',
 ids = test['PassengerId']
 
 # Using Random Forest
-random_forest = RandomForestClassifier(n_estimators=10, criterion="gini", max_depth=30, max_features='log2', min_samples_leaf=3, min_samples_split=3)
-random_forest.fit(X_train, Y_train)
-Y_pred = random_forest.predict(X_test)
-acc_random_forest = round(random_forest.score(X_train, Y_train) * 100, 2)
+model = AdaBoostClassifier(n_estimators=10)
+model.fit(X_train, Y_train)
+Y_pred = model.predict(X_test)
+acc_random_forest = round(model.score(X_train, Y_train) * 100, 2)
 acc_random_forest
-acc_random_forest = round(random_forest.score(X_dev, Y_dev) * 100, 2)
+acc_random_forest = round(model.score(X_dev, Y_dev) * 100, 2)
 acc_random_forest
 
 output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
