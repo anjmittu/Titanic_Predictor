@@ -9,9 +9,9 @@ from sklearn.ensemble import AdaBoostClassifier
 (train, test) = dc.get_data()
 
 num_test = 0.20
-X_train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
-Y_train = train["Survived"]
-X_train, X_dev, X_train, Y_dev = train_test_split(X_all, Y_all, test_size=num_test, random_state=23)
+X_all = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
+Y_all = train["Survived"]
+X_train, X_dev, Y_train, Y_dev = train_test_split(X_all, Y_all, test_size=num_test, random_state=23)
 X_test  = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
 ids = test['PassengerId']
 
