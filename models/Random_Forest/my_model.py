@@ -16,7 +16,7 @@ X_test  = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked',
 ids = test['PassengerId']
 
 # Using Random Forest
-model = RandomForestClassifier(n_estimators=10, criterion="gini", max_depth=30, max_features='log2', min_samples_leaf=3, min_samples_split=3)
+model = RandomForestClassifier(n_estimators=10, criterion="entropy", max_depth=None, max_features='log2', min_samples_leaf=1, min_samples_split=5)
 #Find score of model on training set and dev set
 model.fit(X_train, Y_train)
 acc_random_forest = round(model.score(X_train, Y_train) * 100, 2)
@@ -28,4 +28,4 @@ model.fit(X_all, Y_all)
 Y_pred = model.predict(X_test)
 
 output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
-output.to_csv('titanic-predictions.csv', index = False)
+output.to_csv('titanic_predictions_RF.csv', index = False)

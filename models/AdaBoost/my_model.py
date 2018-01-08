@@ -28,4 +28,4 @@ model.fit(X_all, Y_all)
 Y_pred = model.predict(X_test)
 
 output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
-output.to_csv('titanic-predictions.csv', index = False)
+output.to_csv('titanic_predictions_AB.csv', index = False)
