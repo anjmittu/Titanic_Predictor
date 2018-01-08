@@ -15,7 +15,7 @@ X_train, X_dev, Y_train, Y_dev = train_test_split(X_all, Y_all, test_size=num_te
 X_test  = test
 
 # Using Random Forest
-model = RandomForestClassifier(n_estimators=10, criterion="entropy", max_depth=None, max_features='log2', min_samples_leaf=1, min_samples_split=5)
+model = RandomForestClassifier(n_estimators=10, criterion="entropy", max_depth=30, max_features='sqrt', min_samples_leaf=1, min_samples_split=30)
 #Find score of model on training set and dev set
 model.fit(X_train, Y_train)
 acc_random_forest = round(model.score(X_train, Y_train) * 100, 2)

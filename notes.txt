@@ -34,3 +34,9 @@ Started using K folds because this I think it should be a better estimate than j
 AdaBoost
 Standard features No hyper changes -> 83.150000000000006 (train) 81.010000000000005 (dev) 81.48439450686642 (KFolds) 0.74162 (test)
 {n_estimators=10} -> 83.290000000000006 (train) 81.010000000000005 (test) 81.93133583021224 (KFolds) 0.75598 (test)
+
+Added variable "IsAlone"
+
+Random Forest
+"Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', 'IsAlone' -> 90.730000000000004 (train) 82.120000000000005 (dev) 81.93258426966292 (KFolds)
+{'criterion': 'entropy', 'max_depth': 30, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 30, 'n_estimators': 10} -> 85.390000000000001 (train) 82.120000000000005 (dev) 83.16978776529338 (KFolds) 0.77990 (test)

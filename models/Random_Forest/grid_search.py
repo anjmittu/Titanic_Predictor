@@ -1,5 +1,4 @@
 # data analysis and wrangling
-import pandas as pd
 import data_cleanup as dc
 
 # machine learning
@@ -7,13 +6,12 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import make_scorer, accuracy_score
 from sklearn.model_selection import GridSearchCV
 
-(train, test) = dc.get_data()
+(train, test, ids) = dc.get_data()
 
 num_test = 0.20
-X_train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
+X_train = train.drop("Survived", axis=1)
 Y_train = train["Survived"]
-X_test  = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
-ids = test['PassengerId']
+X_test  = test
 
 # Choose the type of classifier.
 clf = RandomForestClassifier()
@@ -23,7 +21,7 @@ parameters = {'n_estimators': [10, 100, 1000],
               'max_features': ['log2', 'sqrt', 'auto'],
               'criterion': ['entropy', 'gini'],
               'max_depth': [3, 30, 100, 300, 1000],
-              'min_samples_split': [1, 3, 10, 30],
+              'min_samples_split': [1.0, 3, 10, 30],
               'min_samples_leaf': [1, 3, 10, 30]
              }
 

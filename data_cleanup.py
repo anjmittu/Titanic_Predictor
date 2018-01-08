@@ -108,8 +108,14 @@ def get_data():
     test.loc[ test['Fare'] > 31, 'Fare'] = 3
     test['Fare'] = test['Fare'].astype(int)
 
+    # Create alone varibles
+    train['IsAlone'] = 0
+    train.loc[train['FamilyMems'] == 1, 'IsAlone'] = 1
+    test['IsAlone'] = 0
+    test.loc[test['FamilyMems'] == 1, 'IsAlone'] = 1
+
     ids = test['PassengerId']
-    train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', "Survived"]]
-    test = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare']]
-    
+    train = train[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', 'IsAlone', "Survived"]]
+    test = test[["Pclass", "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', 'IsAlone']]
+
     return (train, test, ids)
