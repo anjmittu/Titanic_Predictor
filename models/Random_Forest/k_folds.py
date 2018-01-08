@@ -7,13 +7,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.cross_validation import KFold
 from sklearn.metrics import accuracy_score
 
-(train, test, ids) = dc.get_data()
+(train, test, ids) = dc.get_dummy_data()
 
 num_test = 0.20
 X_train = train.drop("Survived", axis=1)
 Y_train = train["Survived"]
 
-random_forest = RandomForestClassifier(n_estimators=10, criterion="entropy", max_depth=30, max_features='sqrt', min_samples_leaf=1, min_samples_split=30)
+random_forest = RandomForestClassifier(n_estimators=10, criterion="gini", max_depth=1000, max_features='log2', min_samples_leaf=3, min_samples_split=3)
 
 
 kf = KFold(891, n_folds=10)

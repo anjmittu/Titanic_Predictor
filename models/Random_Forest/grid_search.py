@@ -6,7 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import make_scorer, accuracy_score
 from sklearn.model_selection import GridSearchCV
 
-(train, test, ids) = dc.get_data()
+(train, test, ids) = dc.get_dummy_data()
 
 num_test = 0.20
 X_train = train.drop("Survived", axis=1)
