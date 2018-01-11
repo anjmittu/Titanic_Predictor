@@ -45,3 +45,9 @@ Encoded variables to dummy variables
 With Random Forest default -> 90.730000000000004 (train) 82.680000000000007 (dev) 83.16978776529338 (KFolds) 0.76076 (test)
 {'criterion': 'gini', 'max_depth': 1000, 'max_features': 'log2', 'min_samples_leaf': 3, 'min_samples_split': 3, 'n_estimators': 10} -> 85.390000000000001 (train) 81.560000000000002 (dev) 83.16978776529338 (KFolds) 0.77511 (test)
 Logistic Regression with dummy variables -> 85.109999999999999 (train) 82.120000000000005 (dev) 82.49188514357053 (KFolds) 0.75598 (test)
+
+XGBoost
+Basic with dummy vars -> 86.519999999999996 (train) 80.450000000000003 (dev) 82.82896379525593 (KFolds) 0.77511 (test)
+Basic reg vars -> 86.379999999999995 (train) 81.010000000000005 (dev) 82.94257178526842 (KFolds) 0.75598 (test)
+reg vars {'booster': 'gbtree', 'gamma': 0, 'learning_rate': 1, 'max_depth': 3, 'min_child_weight': 3, 'n_estimators': 10} -> 85.810000000000002 (train) 79.329999999999998 (dev) 82.8314606741573 (KFolds) 0.77511 (test)
+dummy vars {'booster': 'gbtree', 'gamma': 0, 'learning_rate': 0.3, 'max_depth': 3, 'min_child_weight': 10, 'n_estimators': 30} -> 84.829999999999998 (train) 79.890000000000001 (dev) 82.82521847690386 (KFolds) 0.77511 (test)
