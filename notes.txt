@@ -51,3 +51,7 @@ Basic with dummy vars -> 86.519999999999996 (train) 80.450000000000003 (dev) 82.
 Basic reg vars -> 86.379999999999995 (train) 81.010000000000005 (dev) 82.94257178526842 (KFolds) 0.75598 (test)
 reg vars {'booster': 'gbtree', 'gamma': 0, 'learning_rate': 1, 'max_depth': 3, 'min_child_weight': 3, 'n_estimators': 10} -> 85.810000000000002 (train) 79.329999999999998 (dev) 82.8314606741573 (KFolds) 0.77511 (test)
 dummy vars {'booster': 'gbtree', 'gamma': 0, 'learning_rate': 0.3, 'max_depth': 3, 'min_child_weight': 10, 'n_estimators': 30} -> 84.829999999999998 (train) 79.890000000000001 (dev) 82.82521847690386 (KFolds) 0.77511 (test)
+
+Change in how NA values are filled (useing mean for fare instead of median and using most common value of Embarked instead of unknown)
+Random forest -> 91.010000000000005 (train) 81.010000000000005 (dev) 81.8214731585518 (KFolds)
+^Not going to test (variance is too large, I don't think it will do well)

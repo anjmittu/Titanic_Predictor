@@ -25,8 +25,8 @@ def get_data():
     test['CabinLetter'] = test['CabinLetter'].map( {'D': 1, 'E': 2, 'B': 3, 'F': 4, 'C': 5, 'G': 6, 'A': 7, 'NA': 8, 'T': 9} ).astype(int)
 
     # Clean up NAs from fare
-    train['Fare'].fillna(train['Fare'].dropna().median(), inplace=True)
-    test['Fare'].fillna(test['Fare'].dropna().median(), inplace=True)
+    train['Fare'].fillna(train['Fare'].dropna().mean(), inplace=True)
+    test['Fare'].fillna(test['Fare'].dropna().mean(), inplace=True)
 
     # Clean up NAs from age
     guess_ages = np.zeros((2,3))
@@ -87,10 +87,10 @@ def get_data():
     test['Title'] = test['Title'].map( {'Unk': -1, 'Rare': 0, 'Miss': 1, 'Master': 2, 'Mr': 3, 'Mrs': 4} ).astype(int)
 
     # Convert Embarked to numbers
-    train['Embarked'] = train['Embarked'].fillna("NA")
-    train['Embarked'] = train['Embarked'].map( {'NA': -1, 'C': 0, 'Q': 1, 'S': 2} ).astype(int)
-    test['Embarked'] = test['Embarked'].fillna("NA")
-    test['Embarked'] = test['Embarked'].map( {'NA': -1, 'C': 0, 'Q': 1, 'S': 2} ).astype(int)
+    train['Embarked'] = train['Embarked'].fillna("S")
+    train['Embarked'] = train['Embarked'].map( {'C': 0, 'Q': 1, 'S': 2} ).astype(int)
+    test['Embarked'] = test['Embarked'].fillna("S")
+    test['Embarked'] = test['Embarked'].map( {'C': 0, 'Q': 1, 'S': 2} ).astype(int)
 
     # Find number of family members on board
     train['FamilyMems'] = train['Parch'] + train['SibSp']
@@ -144,8 +144,8 @@ def get_dummy_data():
     test["Cabin_T"] = 0
 
     # Clean up NAs from fare
-    train['Fare'].fillna(train['Fare'].dropna().median(), inplace=True)
-    test['Fare'].fillna(test['Fare'].dropna().median(), inplace=True)
+    train['Fare'].fillna(train['Fare'].dropna().mean(), inplace=True)
+    test['Fare'].fillna(test['Fare'].dropna().mean(), inplace=True)
 
     # Clean up NAs from age
     guess_ages = np.zeros((2,3))
@@ -208,8 +208,8 @@ def get_dummy_data():
     test = pd.get_dummies(test, columns = ['Title'])
 
     # Convert Embarked to numbers
-    train['Embarked'] = train['Embarked'].fillna("NA")
-    test['Embarked'] = test['Embarked'].fillna("NA")
+    train['Embarked'] = train['Embarked'].fillna("S")
+    test['Embarked'] = test['Embarked'].fillna("S")
     train = pd.get_dummies(train, columns = ['Embarked'])
     test = pd.get_dummies(test, columns = ['Embarked'])
     test["Embarked_NA"] = 0
