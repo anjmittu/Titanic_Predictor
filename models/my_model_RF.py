@@ -24,8 +24,8 @@ features['feature'] = X_all.columns
 features['importance'] = clf.feature_importances_
 features.sort_values(['importance'],ascending=False)
 
-X_all_new = X_all[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C"]]
-X_test_new = X_test[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C"]]
+X_all_new = X_all[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C", "Age_4", "LargeFamily", "Pclass_1", "Pclass_2", "Embarked_S"]]
+X_test_new = X_test[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C", "Age_4", "LargeFamily", "Pclass_1", "Pclass_2", "Embarked_S"]]
 
 # model = SelectFromModel(clf, prefit=True)
 # X_all_new = model.transform(X_all)
