@@ -15,6 +15,25 @@ def k_folds(model, X_train, Y_train):
     fold = 0
     for train_index, test_index in kf:
         fold += 1
+        Xf_train, Xf_test = X_train.values[train_index], X_train.values[test_index]
+        Yf_train, Yf_test = Y_train.values[train_index], Y_train.values[test_index]
+        model.fit(Xf_train, Yf_train)
+        predictions = model.predict(Xf_test)
+        accuracy = accuracy_score(Yf_test, predictions)
+        outcomes.append(accuracy)
+        print("Fold {0} accuracy: {1}".format(fold, accuracy))
+
+    mean_outcome = np.mean(outcomes)
+    print("Mean Accuracy: {0}".format(mean_outcome))
+
+def k_folds_array(model, X_train, Y_train):
+    num_test = 0.20
+
+    kf = KFold(891, n_folds=10)
+    outcomes = []
+    fold = 0
+    for train_index, test_index in kf:
+        fold += 1
         Xf_train, Xf_test = X_train[train_index], X_train[test_index]
         Yf_train, Yf_test = Y_train[train_index], Y_train[test_index]
         model.fit(Xf_train, Yf_train)

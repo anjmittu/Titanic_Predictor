@@ -18,10 +18,19 @@ X_test  = test
 # Pick a subset of parameters to use
 clf = RandomForestClassifier()
 clf = clf.fit(X_all, Y_all)
-model = SelectFromModel(clf, prefit=True)
-X_all_new = model.transform(X_all)
+
+features = pd.DataFrame()
+features['feature'] = X_all.columns
+features['importance'] = clf.feature_importances_
+features.sort_values(['importance'],ascending=False)
+
+X_all_new = X_all[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C"]]
+X_test_new = X_test[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C"]]
+
+# model = SelectFromModel(clf, prefit=True)
+# X_all_new = model.transform(X_all)
 X_all_new.shape
-X_test_new = model.transform(X_test)
+# X_test_new = model.transform(X_test)
 X_test_new.shape
 
 # Choose some parameter combinations to try for grid search
@@ -36,7 +45,7 @@ parameters = {'n_estimators': [10, 100, 1000],
 model = RandomForestClassifier()
 model = mlh.grid_search(model, parameters, X_all_new, Y_all)
 
-mlh.k_folds(model, X_all_new, Y_all)
+mlh.k_folds(model, X_all_new.as_matrix(), Y_all.as_matrix())
 
 X_train, X_dev, Y_train, Y_dev = train_test_split(X_all_new, Y_all, test_size=num_test, random_state=23)
 

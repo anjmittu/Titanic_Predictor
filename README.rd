@@ -1,7 +1,7 @@
 # Titanic_Predictor
 Kaggle's "Titanic: Machine Learning from Disaster" Competition
 
-This is my try at competition.  Currently I am ranked 3990 of 9553.  My best score is 77.99
+This is my try at competition.  Currently I am ranked 2296 of 9553.  My best score is 78.947
 
 ## My Approach
 ### EDA
@@ -27,7 +27,8 @@ I tried four different models: Logistical Regression, Random Forest, Adaboost, a
 Best score: 76.555 with features: "Pclass, "Sex", "AgeRange", "Title"
 
 #### Random Forest
-Best score: 77.99 with features: Pclass, "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', 'IsAlone' and hyperparameter: {'criterion': 'entropy', 'max_depth': 30, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 30, 'n_estimators': 10}
+Best score: 78.947 with features: Title_Mr, "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C" and hyperparameter: {'criterion': 'entropy', 'max_depth': 100, 'max_features': 'auto', 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 10}
+Prevous best score: 77.99 with features: Pclass, "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', 'IsAlone' and hyperparameter: {'criterion': 'entropy', 'max_depth': 30, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 30, 'n_estimators': 10}
 
 #### Adaboost
 Best score: 77.99 with features: Pclass, "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' and hyperparameter: {n_estimators=10}
