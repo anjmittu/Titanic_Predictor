@@ -21,14 +21,19 @@ by the distribution of fares.
 
 
 ### Models
-I tried four different models: Logistical Regression, Random Forest, Adaboost, and XGBoost.  Random Forest, Adaboost, and XGBoost all preformed fairly similarly so I decided to focus on Random Forest.  My models seem to be overfitting the data (exact values from all runs are in **notes.xlsx**).  The scores on the training sets are much higher than the test sets.  Because of this I have decreased the number of features used, however this doesn't seem to be helping. I might want to decrease even more.  All of the models are described below.
+I tried four different models: Logistical Regression, Random Forest, Adaboost, and XGBoost.  Random Forest, Adaboost, and XGBoost all preformed fairly similarly so I decided to focus on Random Forest.  My models seem to be overfitting the data (exact values from all runs are in **notes.xlsx**).  The scores on the training sets are much higher than the test sets.  Because of this I have decreased the number of features used, however this doesn't seem to be helping. I might want to decrease even more.
+
+I've decreased the amount of features to just the top 10 out of ~70.  This has been preforming better. Now I'll try with different amount of features.
+
+All of the models are described below.
 
 ##### Logistical Regression
 Best score: 76.555 with features: "Pclass, "Sex", "AgeRange", "Title"
 
 #### Random Forest
 Best score: 78.947 with features: Title_Mr, "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C" and hyperparameter: {'criterion': 'entropy', 'max_depth': 100, 'max_features': 'auto', 'min_samples_leaf': 1, 'min_samples_split': 10, 'n_estimators': 10}
-Prevous best score: 77.99 with features: Pclass, "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', 'IsAlone' and hyperparameter: {'criterion': 'entropy', 'max_depth': 30, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 30, 'n_estimators': 10}
+
+Previous best score: 77.99 with features: Pclass, "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare', 'IsAlone' and hyperparameter: {'criterion': 'entropy', 'max_depth': 30, 'max_features': 'sqrt', 'min_samples_leaf': 1, 'min_samples_split': 30, 'n_estimators': 10}
 
 #### Adaboost
 Best score: 77.99 with features: Pclass, "Sex", "AgeRange", "Title", 'CabinLetter', 'Embarked', 'FamilyMems', 'Fare' and hyperparameter: {n_estimators=10}
