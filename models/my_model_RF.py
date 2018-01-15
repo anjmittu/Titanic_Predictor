@@ -24,8 +24,8 @@ features['feature'] = X_all.columns
 features['importance'] = clf.feature_importances_
 features.sort_values(['importance'],ascending=False)
 
-X_all_new = X_all[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C", "Age_4", "LargeFamily", "Pclass_1", "Pclass_2", "Embarked_S"]]
-X_test_new = X_test[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C", "Age_4", "LargeFamily", "Pclass_1", "Pclass_2", "Embarked_S"]]
+X_all_new = X_all[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C"]]
+X_test_new = X_test[["Title_Mr", "Sex", "Title_Mrs", "Pclass_3", "Title_Miss", "Cabin_NA", "Fare_0", "Age_3", "Age_2", "Embarked_C"]]
 
 # model = SelectFromModel(clf, prefit=True)
 # X_all_new = model.transform(X_all)
@@ -35,15 +35,15 @@ X_test_new.shape
 
 # Choose some parameter combinations to try for grid search
 parameters = {'n_estimators': [10, 100, 1000],
-              'max_features': ['log2', 'sqrt', 'auto'],
+              'max_features': ['log2', 'sqrt'],
               'criterion': ['entropy', 'gini'],
               'max_depth': [3, 30, 100, 300, 1000],
               'min_samples_split': [1.0, 3, 10, 30],
               'min_samples_leaf': [1, 3, 10, 30]
              }
 
-model = RandomForestClassifier()
-model = mlh.grid_search(model, parameters, X_all_new, Y_all)
+model = RandomForestClassifier(n_estimators=5, min_samples_leaf=3)
+# model = mlh.grid_search(model, parameters, X_all_new, Y_all)
 
 mlh.k_folds(model, X_all_new.as_matrix(), Y_all.as_matrix())
 
