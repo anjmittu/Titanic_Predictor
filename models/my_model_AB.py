@@ -18,10 +18,19 @@ X_test  = test
 # Pick a subset of parameters to use
 clf = AdaBoostClassifier()
 clf = clf.fit(X_all, Y_all)
-model = SelectFromModel(clf, prefit=True)
-X_all_new = model.transform(X_all)
+
+features = pd.DataFrame()
+features['feature'] = X_all.columns
+features['importance'] = clf.feature_importances_
+features.sort_values(['importance'],ascending=False)
+
+X_all_new = X_all[["Title_Mr", "Fare_3", "Title_Rare", "Cabin_G", "Cabin_NA", "Pclass_3", "LargeFamily"]]
+X_test_new = X_test[["Title_Mr", "Fare_3", "Title_Rare", "Cabin_G", "Cabin_NA", "Pclass_3", "LargeFamily"]]
+
+# model = SelectFromModel(clf, prefit=True)
+# X_all_new = model.transform(X_all)
 X_all_new.shape
-X_test_new = model.transform(X_test)
+# X_test_new = model.transform(X_test)
 X_test_new.shape
 
 # Choose some parameter combinations to try for grid search
@@ -30,7 +39,7 @@ parameters = {'n_estimators': [10, 50, 100, 1000],
              }
 
 model = AdaBoostClassifier()
-model = mlh.grid_search(model, parameters, X_all_new, Y_all)
+# model = mlh.grid_search(model, parameters, X_all_new, Y_all)
 
 mlh.k_folds(model, X_all_new, Y_all)
 
@@ -46,5 +55,5 @@ acc_random_forest
 model.fit(X_all, Y_all)
 Y_pred = model.predict(X_test)
 
-output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred })
+output = pd.DataFrame({ 'PassengerId' : ids, 'Survived': Y_pred.astype(int) })
 output.to_csv('predictions/titanic_predictions_AB.csv', index = False)
